@@ -23,7 +23,6 @@ enemies = Array[PackedScene]([ExtResource("3_n6mb2")])
 repeat = 0
 reward = 100
 next_wave_delay = 5.0
-split_paths = false
 
 [sub_resource type="Resource" id="Resource_wcpkw"]
 script = ExtResource("2_vqx6c")
@@ -32,7 +31,6 @@ enemies = Array[PackedScene]([ExtResource("3_n6mb2"), ExtResource("3_n6mb2"), Ex
 repeat = 10
 reward = 400
 next_wave_delay = 1.0
-split_paths = false
 
 [node name="Node2D" type="Node2D"]
 
@@ -46,3 +44,4 @@ curve = SubResource("Curve2D_6alin")
 script = ExtResource("1_biiw0")
 waves = Array[ExtResource("2_vqx6c")]([SubResource("Resource_n00fr"), SubResource("Resource_wcpkw")])
 paths = [NodePath("../Path2D"), NodePath("../Path2D2")]
+split_paths = true

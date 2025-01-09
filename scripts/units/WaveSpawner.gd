@@ -3,6 +3,7 @@ extends Node
 
 @export var waves: Array[Wave] # Array of Wave resources
 @export var paths: Array[Path2D] # Paths for enemy movement
+@export var split_paths: bool = false
 
 var current_wave: int = 0
 
@@ -51,7 +52,11 @@ func spawn_entity(entity: PackedScene, entity_id: int):
 		var spawned_entity = entity.instantiate()
 		var path_follower = PathFollow2D.new()
 		# Select a path based on the current wave index
-		var path = paths[current_wave % paths.size()]
+		var path
+		if split_paths:
+			path = paths[entity_id % paths.size()]
+		else:
+			path = paths[current_wave % paths.size()]
 		
 		# Add the entity as a child of the selected path
 		

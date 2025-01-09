@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwpaum86risaf"]
+[gd_scene load_steps=9 format=3 uid="uid://cwpaum86risaf"]
 
 [ext_resource type="Script" path="res://scripts/units/WaveSpawner.gd" id="1_biiw0"]
 [ext_resource type="Script" path="res://scripts/resources/wave.gd" id="2_vqx6c"]
 [ext_resource type="PackedScene" uid="uid://cgsfr1yx7knid" path="res://prefabs/enemy.tscn" id="3_n6mb2"]
+[ext_resource type="Script" path="res://scripts/HealthUi.gd" id="5_ellwd"]
 
 [sub_resource type="Curve2D" id="Curve2D_802gu"]
 _data = {
@@ -28,7 +29,7 @@ next_wave_delay = 5.0
 script = ExtResource("2_vqx6c")
 id = 1
 enemies = Array[PackedScene]([ExtResource("3_n6mb2"), ExtResource("3_n6mb2"), ExtResource("3_n6mb2")])
-repeat = 10
+repeat = 12
 reward = 400
 next_wave_delay = 1.0
 
@@ -45,3 +46,23 @@ script = ExtResource("1_biiw0")
 waves = Array[ExtResource("2_vqx6c")]([SubResource("Resource_n00fr"), SubResource("Resource_wcpkw")])
 paths = [NodePath("../Path2D"), NodePath("../Path2D2")]
 split_paths = true
+
+[node name="Control2" type="Control" parent="." node_paths=PackedStringArray("HealthLabel", "CashLabel")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_ellwd")
+HealthLabel = NodePath("VBoxContainer/Health")
+CashLabel = NodePath("VBoxContainer/Cash")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Health" type="Label" parent="Control2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Cash" type="Label" parent="Control2/VBoxContainer"]
+layout_mode = 2

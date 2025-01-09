@@ -36,6 +36,7 @@ func spawn_wave(wave: Wave):
 	else:
 		await get_tree().create_timer(wave.next_wave_delay).timeout
 		current_wave += 1
+		Currency.increase(wave.reward)
 		start_wave(current_wave) # Move to the next wave
 
 func spawn_entities(entities: Array[PackedScene]):

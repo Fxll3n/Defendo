@@ -21,12 +21,13 @@ func move():
 	var parent = get_parent()
 	if parent is PathFollow2D:
 		parent.progress += move_speed * get_process_delta_time()
+		if parent.progress_ratio >= 1:
+			emit_signal("reached_end")
+			Health.decrease(damage)
+			call_deferred("queue_free")
 	else:
 		push_warning(self, " did not initialize with expected parent of type \"PathFollow2D\".")
-	if parent.progress_ratio >= 1.0:
-		emit_signal("reached_end")
-		Health.decrease(damage)
-		call_deferred("queue_free")
+	
 
 func die():
 	Currency.increase(reward_amount)

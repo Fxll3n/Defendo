@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8ovess0bpbgk"]
+
+[ext_resource type="Script" path="res://unit.gd" id="1_3100d"]
+[ext_resource type="Texture2D" uid="uid://bdrsijnpioh6c" path="res://icon.svg" id="2_ujlql"]
+
+[node name="Unit" type="Node2D"]
+script = ExtResource("1_3100d")
+max_health = 10.0
+damage = 2.0
+range = 60.0
+texture = ExtResource("2_ujlql")
+healthbar_pos = Vector2(-40, -100)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)

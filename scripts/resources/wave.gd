@@ -6,3 +6,4 @@ extends Resource
 @export var repeat: int = 0
 @export var reward: int = 0
 @export var next_wave_delay: float = 5.0
+@export var split_paths: bool = false

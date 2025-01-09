@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgsfr1yx7knid"]
+
+[ext_resource type="Script" path="res://scripts/units/enemy.gd" id="1_x2a5c"]
+[ext_resource type="Texture2D" uid="uid://bdrsijnpioh6c" path="res://icon.svg" id="2_vn28m"]
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_x2a5c")
+move_speed = 340.0
+reward_amount = 100.0
+max_health = 30.0
+damage = 10.0
+texture = ExtResource("2_vn28m")
+healthbar_pos = Vector2(-40, -100)

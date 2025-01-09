@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwpaum86risaf"]
+[gd_scene load_steps=8 format=3 uid="uid://cwpaum86risaf"]
 
-[ext_resource type="Script" path="res://scripts/units/enemy.gd" id="1_vclod"]
-[ext_resource type="Texture2D" uid="uid://bdrsijnpioh6c" path="res://icon.svg" id="2_ra4xn"]
+[ext_resource type="Script" path="res://scripts/units/WaveSpawner.gd" id="1_biiw0"]
+[ext_resource type="Script" path="res://scripts/resources/wave.gd" id="2_vqx6c"]
+[ext_resource type="PackedScene" uid="uid://cgsfr1yx7knid" path="res://prefabs/enemy.tscn" id="3_n6mb2"]
 
 [sub_resource type="Curve2D" id="Curve2D_802gu"]
 _data = {
@@ -9,21 +10,39 @@ _data = {
 }
 point_count = 5
 
+[sub_resource type="Curve2D" id="Curve2D_6alin"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 269, 310, 0, 0, 0, 0, 847, 436, 0, 0, 0, 0, 1034, 113, 0, 0, 0, 0, 529, 53, 0, 0, 0, 0, 41, 412)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_n00fr"]
+script = ExtResource("2_vqx6c")
+id = 0
+enemies = Array[PackedScene]([ExtResource("3_n6mb2")])
+repeat = 0
+reward = 100
+next_wave_delay = 5.0
+split_paths = false
+
+[sub_resource type="Resource" id="Resource_wcpkw"]
+script = ExtResource("2_vqx6c")
+id = 1
+enemies = Array[PackedScene]([ExtResource("3_n6mb2"), ExtResource("3_n6mb2"), ExtResource("3_n6mb2")])
+repeat = 10
+reward = 400
+next_wave_delay = 1.0
+split_paths = false
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_802gu")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(270, 307)
-rotation = -0.585361
-rotates = false
+[node name="Path2D2" type="Path2D" parent="."]
+curve = SubResource("Curve2D_6alin")
 
-[node name="Enemy" type="Node2D" parent="Path2D/PathFollow2D"]
-script = ExtResource("1_vclod")
-move_speed = 340.0
-reward_amount = 100.0
-max_health = 10.0
-damage = 2.0
-texture = ExtResource("2_ra4xn")
-healthbar_pos = Vector2(-40, -100)
+[node name="WaveSpawner" type="Node" parent="." node_paths=PackedStringArray("paths")]
+script = ExtResource("1_biiw0")
+waves = Array[ExtResource("2_vqx6c")]([SubResource("Resource_n00fr"), SubResource("Resource_wcpkw")])
+paths = [NodePath("../Path2D"), NodePath("../Path2D2")]

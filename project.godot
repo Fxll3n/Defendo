@@ -14,6 +14,11 @@ config/name="Defendo"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Currency="*res://scripts/global/currency_manager.gd"
+Health="*res://scripts/global/health_manager.gd"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

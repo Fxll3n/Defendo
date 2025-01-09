@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwpaum86risaf"]
+
+[ext_resource type="Script" path="res://scripts/units/enemy.gd" id="1_vclod"]
+[ext_resource type="Texture2D" uid="uid://bdrsijnpioh6c" path="res://icon.svg" id="2_ra4xn"]
+
+[sub_resource type="Curve2D" id="Curve2D_802gu"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 270, 307, 0, 0, 0, 0, 445, 191, 0, 0, 0, 0, 784, 247, 0, 0, 0, 0, 651, 520, 0, 0, 0, 0, 39, 412)
+}
+point_count = 5
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_802gu")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(270, 307)
+rotation = -0.585361
+rotates = false
+
+[node name="Enemy" type="Node2D" parent="Path2D/PathFollow2D"]
+script = ExtResource("1_vclod")
+move_speed = 340.0
+reward_amount = 100.0
+max_health = 10.0
+damage = 2.0
+texture = ExtResource("2_ra4xn")
+healthbar_pos = Vector2(-40, -100)

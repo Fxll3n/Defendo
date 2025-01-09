@@ -9,11 +9,16 @@ signal unit_died
 @export var texture: Texture
 @export var healthbar_pos: Vector2 = Vector2(0,0)
 
-var health_bar_theme = preload("res://healthbar_theme.tres")
-var current_health: float = 10
+var current_health: float = 0
+var health_bar_theme = preload("res://assets/ui/healthbar_theme.tres")
 var hbar: Node
 
-func _enter_tree() -> void:
+func _ready():
+	spawn()
+	
+func spawn() -> void:
+	self.connect("unit_died", _on_unit_died)
+	
 	current_health = max_health
 	
 	# Sprite
@@ -67,6 +72,7 @@ func attack_target(target: Node):
 
 func take_damage(dmg_amount: float):
 	if dmg_amount >= current_health:
+		current_health = 0
 		emit_signal("unit_died")
 		die()
 	else:
@@ -88,3 +94,6 @@ func update_healthbar(new_health: float):
 	if hbar is ProgressBar:
 		var tween = create_tween()
 		tween.tween_property(hbar, "value", new_health, 0.35)
+		
+func _on_unit_died():
+	pass

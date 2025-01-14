@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cwpaum86risaf"]
+[gd_scene load_steps=11 format=3 uid="uid://cwpaum86risaf"]
 
 [ext_resource type="Script" path="res://scripts/units/WaveSpawner.gd" id="1_biiw0"]
 [ext_resource type="Script" path="res://scripts/resources/wave.gd" id="2_vqx6c"]
 [ext_resource type="PackedScene" uid="uid://cgsfr1yx7knid" path="res://prefabs/enemy.tscn" id="3_n6mb2"]
 [ext_resource type="Script" path="res://scripts/HealthUi.gd" id="5_ellwd"]
+[ext_resource type="Script" path="res://scripts/units/tower.gd" id="5_y7a63"]
+[ext_resource type="Texture2D" uid="uid://bdrsijnpioh6c" path="res://icon.svg" id="6_1ertd"]
 
 [sub_resource type="Curve2D" id="Curve2D_802gu"]
 _data = {
@@ -66,3 +68,14 @@ layout_mode = 2
 
 [node name="Cash" type="Label" parent="Control2/VBoxContainer"]
 layout_mode = 2
+
+[node name="Tower" type="Node2D" parent="."]
+position = Vector2(805, 366)
+script = ExtResource("5_y7a63")
+targeting_priority = 1
+attack_cooldown = 0.15
+max_health = 10.0
+damage = 10.0
+range = 300.0
+texture = ExtResource("6_1ertd")
+healthbar_pos = Vector2(-40, -100)

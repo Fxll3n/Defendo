@@ -11,3 +11,5 @@ max_health = 30.0
 damage = 10.0
 texture = ExtResource("2_vn28m")
 healthbar_pos = Vector2(-40, -100)
+
+[node name="Area2D" type="Area2D" parent="."]

@@ -32,13 +32,23 @@ func spawn() -> void:
 	# Healthbar
 	var bar = ProgressBar.new()
 	
+	# Detection area
+	var detection_area = Area2D.new()
+	var detection_collision = CollisionShape2D.new()
+	var detection_shape = CircleShape2D.new()
+	
 	# Adding child nodes
 	add_child(sprite)
 	
 	add_child(range_area)
 	range_area.add_child(collision)
+	range_area.connect("area_entered", _on_area_entered)
+	range_area.connect("area_exited", _on_area_exited)
 	
 	add_child(bar)
+	
+	add_child(detection_area)
+	detection_area.add_child(detection_collision)
 	# Editing child nodes
 	sprite.texture = texture
 	
@@ -56,6 +66,11 @@ func spawn() -> void:
 	bar.custom_minimum_size.y = abs(0.1*healthbar_pos.y)
 	hbar = bar
 	
+	# Detection
+	detection_shape.radius = 10
+	detection_collision.shape = detection_shape
+	detection_area.monitorable = true
+	detection_collision.debug_color = Color(1,0.2,0.2, 0.8)
 	# Naming
 	
 	sprite.name = "Sprite"
@@ -63,6 +78,8 @@ func spawn() -> void:
 	range_area.name = "Range"
 	
 	bar.name = "HealthBar"
+	
+	detection_area.name = "DetectionArea"
 
 func attack_target(target: Node):
 	if target.has_method("take_damage"):
@@ -93,7 +110,13 @@ func die():
 func update_healthbar(new_health: float):
 	if hbar is ProgressBar:
 		var tween = create_tween()
-		tween.tween_property(hbar, "value", new_health, 0.35)
+		tween.tween_property(hbar, "value", new_health, 0.15)
 		
 func _on_unit_died():
+	pass
+
+func _on_area_entered(area: Area2D):
+	pass
+
+func _on_area_exited(area: Area2D):
 	pass

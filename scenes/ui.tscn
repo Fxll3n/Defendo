@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu26d6kefal1a"]
+
+[ext_resource type="Script" path="res://scripts/global/HealthUi.gd" id="1_h2mdy"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+
+[node name="Panel" type="PanelContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.85
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VSplitContainer" type="VSplitContainer" parent="Control/Panel/MarginContainer"]
+layout_mode = 2
+split_offset = 10
+collapsed = true
+
+[node name="Control2" type="Control" parent="Control/Panel/MarginContainer/VSplitContainer" node_paths=PackedStringArray("HealthLabel", "CashLabel")]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+script = ExtResource("1_h2mdy")
+HealthLabel = NodePath("VBoxContainer/Health")
+CashLabel = NodePath("VBoxContainer/Cash")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/MarginContainer/VSplitContainer/Control2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Health" type="Label" parent="Control/Panel/MarginContainer/VSplitContainer/Control2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Cash" type="Label" parent="Control/Panel/MarginContainer/VSplitContainer/Control2/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/Panel/MarginContainer/VSplitContainer"]
+layout_mode = 2
+scroll_horizontal_custom_step = 0.0
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/MarginContainer/VSplitContainer/ScrollContainer"]
+layout_mode = 2

@@ -30,14 +30,16 @@ var current_target: Enemy
 var has_attacked: bool = false
 
 func _process(delta: float) -> void:
-	enemy_list = enemy_list.filter(is_instance_valid)
-	current_target = get_target()
-	if current_target:
-		if !has_attacked:
-			attack_target(current_target)
-			has_attacked = true
-			await get_tree().create_timer(attack_cooldown).timeout
-			has_attacked = false
+	if is_placed:
+		enemy_list = enemy_list.filter(is_instance_valid)
+		current_target = get_target()
+		if current_target:
+			look_at(current_target.global_position)
+			if !has_attacked:
+				attack_target(current_target)
+				has_attacked = true
+				await get_tree().create_timer(attack_cooldown).timeout
+				has_attacked = false
 		
 
 func get_target() -> Enemy:

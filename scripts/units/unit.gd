@@ -6,7 +6,6 @@ signal unit_died
 @export var max_health: float = 0
 @export var damage: float = 0
 @export var range: float = 0
-@export var healthbar_pos: Vector2 = Vector2(0,0)
 
 var current_health: float = 0
 var health_bar_theme = preload("res://assets/ui/healthbar_theme.tres")
@@ -51,6 +50,7 @@ func spawn() -> void:
 	# Editing child nodes
 	
 	shape.radius = range
+	
 	collision.shape = shape
 	
 	range_area.monitoring = true

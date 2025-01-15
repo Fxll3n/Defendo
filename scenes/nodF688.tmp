@@ -17,8 +17,8 @@ point_count = 14
 script = ExtResource("2_vqx6c")
 id = 0
 enemies = Array[PackedScene]([ExtResource("3_n6mb2"), ExtResource("3_n6mb2"), ExtResource("3_n6mb2")])
-repeat = 10
-reward = 100
+repeat = 3
+reward = 10
 next_wave_delay = 1.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g3rfa"]
@@ -140,7 +140,6 @@ texture_region_size = Vector2i(18, 18)
 6:1/0/terrains_peering_bit/bottom_corner = 0
 6:1/0/terrains_peering_bit/left_corner = 0
 6:1/0/terrains_peering_bit/top_corner = 0
-6:1/0/custom_data_0 = true
 6:2/0 = 0
 6:2/0/texture_origin = Vector2i(0, -5)
 6:2/0/y_sort_origin = 8
@@ -183,7 +182,6 @@ texture_region_size = Vector2i(18, 18)
 7:1/0/terrains_peering_bit/bottom_corner = 0
 7:1/0/terrains_peering_bit/left_corner = 0
 7:1/0/terrains_peering_bit/top_corner = 0
-7:1/0/custom_data_0 = true
 7:2/0 = 0
 7:2/0/texture_origin = Vector2i(0, -5)
 7:2/0/y_sort_origin = 8
@@ -444,8 +442,6 @@ terrain_set_0/terrain_0/name = "Path"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 custom_data_layer_0/name = "Placaeble"
 custom_data_layer_0/type = 1
-custom_data_layer_1/name = "IsUsed"
-custom_data_layer_1/type = 1
 sources/2 = SubResource("TileSetAtlasSource_g3rfa")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7djf7"]
@@ -839,6 +835,7 @@ script = ExtResource("1_vojk8")
 tilemap = NodePath("Tilemap/Ground")
 
 [node name="Path2D" type="Path2D" parent="."]
+scale = Vector2(3, 3)
 curve = SubResource("Curve2D_wug8k")
 
 [node name="WaveSpawner" type="Node" parent="." node_paths=PackedStringArray("paths")]
@@ -849,6 +846,7 @@ paths = [NodePath("../Path2D")]
 [node name="Tilemap" type="Node2D" parent="."]
 y_sort_enabled = true
 texture_filter = 1
+scale = Vector2(3, 3)
 
 [node name="Ground" type="TileMapLayer" parent="Tilemap"]
 z_index = -1
@@ -907,7 +905,6 @@ tile_map_data = PackedByteArray("AAD5//r/AQAHAAAAAAD6//r/AQAHAAAAAAD5//v/AQAHAAA
 tile_set = SubResource("TileSet_urarc")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, 60)
-zoom = Vector2(3, 3)
+position = Vector2(0, 179)
 
 [node name="UI" parent="." instance=ExtResource("6_aqltt")]

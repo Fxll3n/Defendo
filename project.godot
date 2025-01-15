@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 Currency="*res://scripts/global/currency_manager.gd"
 Health="*res://scripts/global/health_manager.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/2d_shapes/plugin.cfg")
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

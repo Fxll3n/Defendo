@@ -1,75 +1,59 @@
 class_name Tower
 extends Unit
-
-enum TARGETING {
-	FIRST,
-	LAST,
-	CLOSE,
-	STRONG,
-}
-
-enum ATK_TYPE {
-	SINGLE,
-	MULTIPLE,
-	CHAINED,
-	AOE
-}
-
-@export_subgroup("Targeting")
-@export var targeting_priority: TARGETING
-@export var targeting_logic: ATK_TYPE
-@export_range(0, 100) var attack_cooldown: float 
+@export var targeting_priority: int
+@export var attack_cooldown: float = 1.0
 @export var heals_allies: bool = false
 
-var enemy_list: Array[Enemy] = []
+var enemies_in_range: Array[Node] = []
+var current_target: Node = null
+var attack_ready: bool = true
 
-var is_placed: bool = false
-
-var current_target: Enemy
-
-var has_attacked: bool = false
+func _ready() -> void:
+	super._ready()
 
 func _process(delta: float) -> void:
-	if is_placed:
-		enemy_list = enemy_list.filter(is_instance_valid)
-		current_target = get_target()
-		if current_target:
-			look_at(current_target.global_position)
-			if !has_attacked:
-				attack_target(current_target)
-				has_attacked = true
-				await get_tree().create_timer(attack_cooldown).timeout
-				has_attacked = false
-		
+	if not attack_ready or enemies_in_range.is_empty():
+		return
 
-func get_target() -> Enemy:
-	var target: Enemy
-	if enemy_list:
-		target = enemy_list[0]
-		var target_parent = target.get_parent()
-		for enemy in enemy_list:
-			var enemy_parent = enemy.get_parent()
-			match targeting_priority:
-				TARGETING.FIRST:
-					if enemy_parent.progress_ratio > target_parent.progress_ratio:
-						target = enemy
-				TARGETING.LAST:
-					if enemy_parent.progress_ratio < target_parent.progress_ratio:
-						target = enemy
-				TARGETING.CLOSE:
-					if abs(enemy_parent.global_position - global_position) > abs(target_parent.global_position - global_position):
-						target = enemy
-				TARGETING.STRONG:
-					if enemy_parent.progress_ratio > target_parent.progress_ratio:
-						target = enemy
-	return target
+	current_target = select_target()
+	if current_target:
+		attack_target(current_target)
 
-func _on_area_entered(area: Area2D):
-	var parent = area.get_parent()
-	if is_instance_valid(parent) and parent is Enemy:
-		enemy_list.append(parent)
+func select_target() -> Node:
+	if enemies_in_range.is_empty():
+		return null
 
-func _on_area_exited(area: Area2D):
-	var parent = area.get_parent()
-	if is_instance_valid(parent) and parent is Enemy:
-		enemy_list.erase(parent)
+	match targeting_priority:
+		0: # First
+			return enemies_in_range[0]
+		1: # Last
+			return enemies_in_range[-1]
+		2: # Closest
+			enemies_in_range.sort_custom(_sort_by_distance)
+			return enemies_in_range[0]
+		3: # Strongest
+			enemies_in_range.sort_custom(_sort_by_strength)
+			return enemies_in_range[0]
+
+	return null  # Fallback in case match fails
+
+func attack_target(target: Node) -> void:
+	if target.has_method("take_damage"):
+		attack_ready = false
+		target.take_damage(damage)
+		await get_tree().create_timer(attack_cooldown).timeout
+		attack_ready = true
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.get_parent() is Enemy:
+		enemies_in_range.append(area.get_parent())
+
+func _on_area_exited(area: Area2D) -> void:
+	if area.get_parent() is Enemy:
+		enemies_in_range.erase(area.get_parent())
+
+func _sort_by_distance(a: Node, b: Node) -> bool:
+	return a.global_position.distance_to(global_position) < b.global_position.distance_to(global_position)
+
+func _sort_by_strength(a: Node, b: Node) -> bool:
+	return a.health > b.health  # Stronger enemies should come first

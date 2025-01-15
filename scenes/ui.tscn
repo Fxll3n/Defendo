@@ -1,6 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://bu26d6kefal1a"]
+[gd_scene load_steps=7 format=3 uid="uid://bu26d6kefal1a"]
 
 [ext_resource type="Script" path="res://scripts/global/HealthUi.gd" id="1_h2mdy"]
+[ext_resource type="Texture2D" uid="uid://bdrsijnpioh6c" path="res://icon.svg" id="2_15ci0"]
+[ext_resource type="Script" path="res://scripts/tower_shop.gd" id="3_nwac0"]
+[ext_resource type="Script" path="res://scripts/resources/tower_item.gd" id="4_johr1"]
+[ext_resource type="PackedScene" uid="uid://c12lllgu0us8x" path="res://prefabs/test_tower.tscn" id="5_th28k"]
+
+[sub_resource type="Resource" id="Resource_sdl01"]
+script = ExtResource("4_johr1")
+tower_name = "Henry"
+tower_cost = 400
+tower_max_health = 15
+tower_damage = 25
+tower_range = 400
+tower_icon = ExtResource("2_15ci0")
+tower = ExtResource("5_th28k")
+tower_heals_allies = false
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
@@ -57,5 +72,13 @@ layout_mode = 2
 scroll_horizontal_custom_step = 0.0
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/MarginContainer/VSplitContainer/ScrollContainer"]
+[node name="Shop" type="ItemList" parent="Control/Panel/MarginContainer/VSplitContainer/ScrollContainer" groups=["Shop"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
+allow_search = false
+fixed_icon_size = Vector2i(30, 30)
+script = ExtResource("3_nwac0")
+towers = Array[ExtResource("4_johr1")]([SubResource("Resource_sdl01")])
+
+[connection signal="item_clicked" from="Control/Panel/MarginContainer/VSplitContainer/ScrollContainer/Shop" to="Control/Panel/MarginContainer/VSplitContainer/ScrollContainer/Shop" method="_on_item_clicked"]

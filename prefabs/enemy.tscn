@@ -125,7 +125,6 @@ move_speed = 70.0
 reward_amount = 100.0
 max_health = 30.0
 damage = 10.0
-healthbar_pos = Vector2(-10, -25)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
